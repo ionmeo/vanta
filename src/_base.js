@@ -173,6 +173,9 @@ VANTA.VantaBase = class VantaBase {
       console.warn("[VANTA] No THREE defined on window")
       return
     }
+    if (THREE.ColorManagement) {
+      THREE.ColorManagement.enabled = false
+    }
     // Set renderer
     this.renderer = new THREE.WebGLRenderer({
       alpha: false,
@@ -182,6 +185,10 @@ VANTA.VantaBase = class VantaBase {
       stencil: false,
       powerPreference: "high-performance"
     })
+    if (THREE.LinearSRGBColorSpace) {
+      this.renderer.outputColorSpace = THREE.LinearSRGBColorSpace
+    }
+    this.renderer.useLegacyLights = true
     if (!this.options.canvas) {
       this.el.appendChild(this.renderer.domElement)
     } else {
