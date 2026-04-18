@@ -41,12 +41,9 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   devServer: {
-    // contentBase: './dist',
-    // publicPath: '',
     static: {
       directory: path.join(__dirname, ''),
     },
     compress: true,
-    // port: 9000
   }
 }
