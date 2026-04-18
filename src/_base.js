@@ -347,8 +347,15 @@ VANTA.VantaBase = class VantaBase {
       }
     }
 
+    // Limit fps to skip render when called more often than options.fps
+    const fpsLimit = this.options.fps
+    const throttled = fpsLimit > 0
+      && this._lastRenderTime !== undefined
+      && (now - this._lastRenderTime) < (1000 / fpsLimit)
+
     // Only animate if element is within view
-    if (this.options.forceAnimate || this.isOnScreen()) {
+    if (!throttled && (this.isOnScreen() || this.options.forceAnimate)) {
+      this._lastRenderTime = now
       if (typeof this.onUpdate === "function") {
         this.onUpdate()
       }
